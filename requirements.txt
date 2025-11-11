@@ -86,7 +86,6 @@ prompt_toolkit==3.0.52
 psutil==7.0.0
 psycopg2-binary==2.9.10
 pure_eval==0.2.3
-PyAudio==0.2.14
 pycparser==2.22
 Pygments==2.19.2
 pyparsing==3.2.5
@@ -137,5 +136,6 @@ xyzservices==2025.4.0
 pip>=25.3
 setuptools>=68.0
 wheel>=0.42
+
 
 
