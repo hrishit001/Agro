@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - Crop Predictor</title>
+      <link rel="icon" type="image/png" href="{{ url_for('static', filename='seedling.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   
+</head>
+<body>
+    <div class="container" id="result-container">
+        <img src="{{ url_for('static', filename='seedling.png') }}" alt="Form Icon" class="form-image">
+        <div id="result-header">
+           Your Predicted Crop: <span class="highlight">{{ crop }}</span>
+        </div>
+        <p>Based on the data from <strong>{{ city }}, {{ state }}</strong>.</p>
+        
+      
+
+        <div class="map-btn-container">
+             {% if pdf_file %}
+        <a href="{{ url_for('download_pdf', filename=pdf_file) }}" class="btn map-btn">View Report</a>
+        {% else %}
+        <p>No detailed PDF available for this crop yet.</p>
+        {% endif %}
+    <a href="{{ url_for('crop_distribution_map') }}" class="btn map-btn">Crop Map</a>
+</div>
+
+    </div>
+<script>
+function speakAfterLoad(text, delay = 1500) {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      window.speechSynthesis.cancel();
+
+      // Create the speech message
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-IN";    // Indian English accent
+      utterance.rate = 1;          // Normal rate
+      utterance.pitch = 1;         // Normal pitch
+      utterance.volume = 1;        // Full volume
+      const voices = window.speechSynthesis.getVoices();
+      const indianVoice = voices.find(v => v.lang === "en-IN" || v.name.includes("Ravi") || v.name.includes("Heera"));
+      if (indianVoice) utterance.voice = indianVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }, delay); 
+  });
+}
+
+speakAfterLoad("I have found the best crop for that condition, it is {{ crop }}.");
+</script>
+
+
+</body>
+</html>
