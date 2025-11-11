@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro - Crop Predictor</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='seedling.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="Main-text">
+         <h1>Nice to meet you, myself<span class="italic"> Agro.</span></h1>
+    </div>
+     
+    </div>
+    <div class="container">
+        <img src="{{ url_for('static', filename='seedling.png') }}" alt="Form Icon" class="form-image">
+
+        <form action="/predict" method="POST" class="form-box">
+            <label for="state">Select Your State:</label>
+            <select name="state" id="state" required>
+                <option value="">-- Choose A State --</option>
+                {% for s in states %}
+                    <option value="{{ s }}">{{ s }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="city">Select Your City:</label>
+            <select name="city" id="city" required>
+                <option value="">-- Choose A City --</option>
+            </select>
+
+            <label>Temperature (°C):</label>
+            <input type="number" step="any" name="temperature" placeholder="Enter temperature..." required>
+
+            <label>Humidity (%):</label>
+            <input type="number" step="any" name="humidity" placeholder="Enter humidity..." required>
+
+            <label>Rainfall (mm):</label>
+            <input type="number" step="any" name="rainfall" placeholder="Enter rainfall..." required>
+
+            <div class="btn-container">
+            <button type="submit" class="btn">Predict Crop</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const stateSelect = document.getElementById("state");
+        const citySelect = document.getElementById("city");
+
+        stateSelect.addEventListener("change", function() {
+            const state = encodeURIComponent(this.value.trim());
+            citySelect.innerHTML = '<option value="">Loading...</option>';
+
+            if (state) {
+                fetch(`/get_cities/${state}`)
+                    .then(response => response.json())
+                    .then(cities => {
+                        citySelect.innerHTML = '<option value="">-- Choose City --</option>';
+                        cities.forEach(city => {
+                            const option = document.createElement("option");
+                            option.value = city;
+                            option.textContent = city;
+                            citySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching cities:", error);
+                        citySelect.innerHTML = '<option value="">Error loading cities</option>';
+                    });
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
