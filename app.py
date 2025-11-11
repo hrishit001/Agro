@@ -86,7 +86,7 @@ def predict():
 
 @app.route("/download/<filename>")
 def download_pdf(filename):
-    return send_from_directory("Static/pdf", filename, as_attachment=True)
+    return send_from_directory("static/pdf", filename, as_attachment=True)
 
 @app.route("/crop_distribution_map")
 def crop_distribution_map():
@@ -94,4 +94,5 @@ def crop_distribution_map():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=int(os.environ.get('PORT',10000)))
+
 
