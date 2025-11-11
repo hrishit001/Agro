@@ -137,4 +137,7 @@ widgetsnbextension==4.0.14
 wikipedia==1.4.0
 WTForms==3.2.1
 xyzservices==2025.4.0
+pip>=25.3
+setuptools>=68.0
+wheel>=0.42
 
