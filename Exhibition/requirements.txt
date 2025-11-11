@@ -96,7 +96,6 @@ python-dateutil==2.9.0.post0
 python-json-logger==3.3.0
 pyttsx3==2.99
 pytz==2025.2
-pywin32
 pywinpty==3.0.0
 PyYAML==6.0.2
 pyzmq==27.0.2
@@ -138,4 +137,5 @@ widgetsnbextension==4.0.14
 wikipedia==1.4.0
 WTForms==3.2.1
 xyzservices==2025.4.0
+
 
