@@ -68,7 +68,7 @@ def predict():
         plt.close()
 
         pdf_filename = f"{predicted_crop.lower()}.pdf"
-        pdf_path = os.path.join("Static/pdf", pdf_filename)
+        pdf_path = os.path.join("static/pdf", pdf_filename)
 
         pdf_exists = os.path.exists(pdf_path)
         return render_template(
@@ -94,5 +94,6 @@ def crop_distribution_map():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=int(os.environ.get('PORT',10000)))
+
 
 
