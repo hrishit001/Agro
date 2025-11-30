@@ -8,88 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- <button onclick="window.open('https://www.google.com/search?q=weather+near+me', '_blank')"
      class="weather-btn">🌤</button>-->
-
-<div class="fab-group">
-
-  <!-- chat button -->
-  <button id="chatFab" class="fab fab-chat" title="Ask farming questions">
-    💬
-  </button>
-</div>
-
-<!-- Chat panel -->
-<div id="chatPanel" class="chat-panel" role="dialog" aria-hidden="true">
-  <header>Farmer's Assistant</header>
-  <div class="body" id="chatBody">
-    <div style="font-size:13px;color:#555;margin-bottom:8px;">Ask about crops, fertilizers, irrigation, pests — keep it concise.</div>
-  </div>
-
-  <div style="padding:12px;">
-    <textarea id="qInput" placeholder="Type your question (e.g., 'When to sow wheat in Uttar Pradesh?')"></textarea>
-    <div class="actions">
-      <button class="btn btn-close" id="closeChat">Close</button>
-      <button class="btn btn-send" id="sendQ">Ask</button>
-    </div>
-    <div id="chatStatus" class="chat-loading" style="display:none;">Thinking...</div>
-  </div>
-</div>
-
 <script>
-const chatFab = document.getElementById('chatFab');
-const chatPanel = document.getElementById('chatPanel');
-const closeChat = document.getElementById('closeChat');
-const sendQ = document.getElementById('sendQ');
-const qInput = document.getElementById('qInput');
-const chatBody = document.getElementById('chatBody');
-const chatStatus = document.getElementById('chatStatus');
-
-chatFab.addEventListener('click', () => {
-  chatPanel.style.display = chatPanel.style.display === 'block' ? 'none' : 'block';
-  chatPanel.setAttribute('aria-hidden', chatPanel.style.display !== 'block');
-  qInput.focus();
-});
-
-closeChat.addEventListener('click', () => {
-  chatPanel.style.display = 'none';
-  chatPanel.setAttribute('aria-hidden', 'true');
-});
-
-function appendMessage(text, cls='') {
-  const d = document.createElement('div');
-  d.className = 'chat-msg ' + cls;
-  d.textContent = text;
-  chatBody.appendChild(d);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-sendQ.addEventListener('click', async () => {
-  const question = qInput.value.trim();
-  if (!question) return;
-  appendMessage(question, 'user'); // show user message
-  qInput.value = '';
-  chatStatus.style.display = 'block';
-
-  try {
-    const resp = await fetch('/ask_gpt', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({question})
-    });
-    const data = await resp.json();
-    if (!resp.ok) {
-      appendMessage('Error: ' + (data.error || resp.statusText));
-    } else {
-      appendMessage(data.answer || "Sorry, I didn't get an answer.");
-    }
-  } catch (err) {
-    appendMessage('Network error: ' + err.message);
-  } finally {
-    chatStatus.style.display = 'none';
-  }
-});
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="J1Qw53DmLcUKHN8vDFmCx";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
 </script>
-
-    
 </head>
 <body>
     <div class="overlay"></div>
